@@ -62,7 +62,7 @@ def reactive_calc_combined():
     reactive.invalidate_later(UPDATE_INTERVAL_SECS)
 
     # Data generation logic
-    temp = round(random.uniform(-18, -16), 1)
+    temp = round(random.uniform(15, 30), 1)
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     new_dictionary_entry = {"temp":temp, "timestamp":timestamp}
 
@@ -89,7 +89,7 @@ def reactive_calc_combined():
 # Call the ui.page_opts() function
 # Set title to a string in quotes that will appear at the top
 # Set fillable to True to use the whole page width for the UI
-ui.page_opts(title="PyShiny Express: Live Data Example", fillable=True)
+ui.page_opts(title="Leesburg, VA Explorer", fillable=True)
 theme.darkly()
 
 # Sidebar is typically used for user interaction/information
@@ -97,9 +97,9 @@ theme.darkly()
 # Everything in the sidebar is indented consistently
 with ui.sidebar(open="open"):
 
-    ui.h2("Antarctic Explorer", class_="text-center")
+    ui.h2("Leesburg, VA Explorer", class_="text-center")
     ui.p(
-        "A demonstration of real-time temperature readings in Antarctica.",
+        "A demonstration of real-time temperature readings in Leesburg, VA.",
         class_="text-center",
     )
     ui.hr()
@@ -206,3 +206,23 @@ with ui.card():
             fig.update_layout(xaxis_title="Time",yaxis_title="Temperature (°C)")
 
         return fig
+
+from ipyleaflet import Map, Marker
+from shiny.express import ui
+from shinywidgets import render_widget
+
+# Define the coordinates for Leesburg, VA
+leesburg_va_coords = (39.1157, -77.5636)
+
+ui.h2("Map Showing Leesburg, VA")
+
+@render_widget
+def map():
+    # Create a map centered on Leesburg, VA
+    map = Map(center=leesburg_va_coords, zoom=13)
+
+    # Create a marker for Leesburg, VA
+    point = Marker(location=leesburg_va_coords, draggable=False)
+    map.add_layer(point)
+
+    return map
