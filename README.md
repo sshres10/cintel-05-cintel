@@ -1,8 +1,5 @@
 # cintel-05-cintel
 
-# cintel-05-cintel-fancy
-
-A bit nicer looking live data example (using random, updating 1x/second)
 
 Uses:
 
